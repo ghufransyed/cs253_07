@@ -1,0 +1,28 @@
+url mapping in main.py
+handlers in (various) foo_handler.py
+    login -> login.py -> login.html -> return cookie -> redirect to frontpage
+    signup -> signup.py -> signup.html > return cookie -> redirect to frontpage (last page?)
+    logout -> remove cookie -> redirect to frontpage
+    frontpage -> frontpage.py  (is frontpage just a type of 'otherpage' = page)
+                                YES!
+    otherpage -> otherpage.py ->
+        foo_page -> calling some content by page-name foo_contents in page template
+    _edit/otherpage
+    _history/otherpage
+models:
+    users, contains [username, pw-hash, (email), created_date ]
+    page, contains [(title)?, content, created_date, author]
+                [page_history?] look at datastore and parents
+                consider having page_history be a link to 
+                linked list of data items (history)
+            make each new version of a page a child of the previous
+            page. Each page has it's 'created_date' which can be
+            used for the history
+    address (?) - for url handlers, if address in address_database
+                return relevant data
+                else make new page (edit page)
+                (? create before and after  or only after
+                submission of edit?)
+
+
+
