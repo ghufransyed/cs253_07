@@ -16,6 +16,10 @@ handlers in (various) foo_handler.py
     domain, filter out _edit/_history and either open / create
     the page NEXT STEP 
     mostly done, may need to filter out regexp beginning or ending with whitespace
+    [put it in handlers, used official regexp]
+
+
+    TODO: need to rewrite WikiPage, removing address tests
 models:
     users, contains [username, pw-hash, (email), created_date(?) ]
     page, contains [(title)?, content, created_date, author]
