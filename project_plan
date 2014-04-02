@@ -7,10 +7,17 @@ handlers in (various) foo_handler.py
                                 YES!
     otherpage -> otherpage.py ->
         foo_page -> calling some content by page-name foo_contents in page template
-    _edit/otherpage
-    _history/otherpage
+    wikipage = frontpage and otherpage
+            previously mainpage/permalinkpage
+    _edit/otherpage (previously 'formpage')
+    _history/otherpage (contains all versions, 1st 100 characters)
+
+    need to rewrite handlers using regexp to take any string after 
+    domain, filter out _edit/_history and either open / create
+    the page NEXT STEP 
+    mostly done, may need to filter out regexp beginning or ending with whitespace
 models:
-    users, contains [username, pw-hash, (email), created_date ]
+    users, contains [username, pw-hash, (email), created_date(?) ]
     page, contains [(title)?, content, created_date, author]
                 [page_history?] look at datastore and parents
                 consider having page_history be a link to 
@@ -18,6 +25,7 @@ models:
             make each new version of a page a child of the previous
             page. Each page has it's 'created_date' which can be
             used for the history
+            however, each page should 
     address (?) - for url handlers, if address in address_database
                 return relevant data
                 else make new page (edit page)

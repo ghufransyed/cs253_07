@@ -1,7 +1,7 @@
 from mainpage import MainPage
 from mainhandler import params
 import re
-from models import BlogData
+from models import WikiData # TODO change refs below from BlogData
 from google.appengine.api import memcache
 
 

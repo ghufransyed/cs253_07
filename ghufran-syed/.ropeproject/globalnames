@@ -1,7 +1,7 @@
-€}q(Umainhandler]q(Utemplate_dirqU	jinja_envqUHandlerqUparamsqeUpermalinkpage]qUPermalinkPageqaUjson_output]q	(UPermalinkPageq
+€}q(Umainhandler]q(Utemplate_dirqU	jinja_envqUHandlerqUparamsqeUmain]qUappqaUjson_output]q	(UPermalinkPageq
 UBlogDataqUMainPageJsonqUtemplate_dirqUFormPageqU
 SUBJECT_REqUMainPageqU	jinja_envqUHandlerqUparamsqU
 CONTENT_REqUappqUPermalinkJsonqeUform]q(Utemplate_dirqU	jinja_envqUform_paramsqUHandlerqUSuccessHandlerqUFormHandlerqeUformpage]q(UFormPageqU
 SUBJECT_REq U
 CONTENT_REq!eUmodels]q"(UBlogDataq#UUserq$eUsignup]q%(Uform_paramsq&USignupHandlerq'eU
-models_ndb]q((UBlogDataq)UUserq*eUflushhandler]q+UFlushHandlerq,aUmainpage]q-UMainPageq.aUlogout]q/(Utemplate_dirq0U	jinja_envq1ULogoutHandlerq2Uform_paramsq3UHandlerq4eUlogin]q5(ULoginHandlerq6Utemplate_dirq7U	jinja_envq8Ulogin_paramsq9UHandlerq:UWelcomeHandlerq;eUmain]q<Uappq=aUsecurity]q>(Uhash_strq?Umake_secure_valq@Uvalid_pwqAUmake_pw_hashqBUSECRETqCU	make_saltqDUcheck_secure_valqEeu.
+models_ndb]q((UBlogDataq)UUserq*eUflushhandler]q+UFlushHandlerq,aUmainpage]q-UMainPageq.aUlogout]q/(Utemplate_dirq0U	jinja_envq1ULogoutHandlerq2Uform_paramsq3UHandlerq4eUlogin]q5(ULoginHandlerq6Utemplate_dirq7U	jinja_envq8Ulogin_paramsq9UHandlerq:UWelcomeHandlerq;eUpermalinkpage]q<UWikiPageq=aUsecurity]q>(Uhash_strq?Umake_secure_valq@Uvalid_pwqAUmake_pw_hashqBUSECRETqCU	make_saltqDUcheck_secure_valqEeUwikipage]qFUWikiPageqGau.

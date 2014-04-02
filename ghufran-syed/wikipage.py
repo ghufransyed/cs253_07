@@ -1,32 +1,39 @@
 from mainhandler import Handler, params
-from models import BlogData
+from models import WikiData
 from google.appengine.api import memcache
 import logging
-import datetime
+import re
 
 
 class WikiPage(Handler):
     def get(self, wikipage_address):
-        blog_query = memcache.get(wikipage_address)
-        if blog_query is not None:
+        self.write((repr(wikipage_address)))
+        self.write("\n")
+
+        test = re.search("(\w+)", wikipage_address)
+        if test:
+            logging.error("test positive")
+            wikipage_address = test.group(0)
+            self.write(wikipage_address)
+        else:
+            logging.error("test negative")
+            wikipage_address = "/"
+            print "wikipage_address is '{0}'".format(wikipage_address)
+            self.write(wikipage_address)
+
+        wikipage_query = memcache.get(wikipage_address)
+        if wikipage_query is not None:
             logging.error('cache-hit')
-            self.time_elapsed_fn(blog_query)
+            params["wikipage_query"] = wikipage_query
+            self.render("wikipage.html", **params)
         else:
             logging.error('cache-miss')
-            timestamp = datetime.datetime.now()
-            blog_query = (BlogData.get_by_id(int(wikipage_address)),
-                          timestamp)
-            memcache.set(wikipage_address, blog_query)
-            self.time_elapsed_fn(blog_query)
-
-# TODO may need to incorporate the caching code back into
-# get function rather than in time_elapsed_fn
-
-    def time_elapsed_fn(self, blog_query_p):
-        last_updated = blog_query_p[1]
-        blog_query = blog_query_p[0]
-        now = datetime.datetime.now()
-        time_elapsed = (now - last_updated).seconds
-        params["blog_query"] = blog_query
-        params["time_elapsed"] = time_elapsed
-        self.render("permalink.html", **params)
+            wikipage_query = WikiData.query(
+                WikiData.address == wikipage_address).fetch(1)
+            if wikipage_query:
+                memcache.set(wikipage_address, wikipage_query)
+                params["wikipage_query"] = wikipage_query
+                self.render("wikipage.html", **params)
+            else:
+                logging.error("wikipage_query empty, need redirect to edit page")
+                pass  # TODO  redirect edit page

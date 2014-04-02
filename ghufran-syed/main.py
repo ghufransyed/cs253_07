@@ -2,7 +2,7 @@ import webapp2
 from signup import SignupHandler
 from login import LoginHandler
 from logout import LogoutHandler
-from formpage import FormPage
+from formpage import FormPage  # change names and ref to data models
 from wikipage import WikiPage
 # from welcome import WelcomeHandler
 # from mainpage import MainPage
@@ -16,6 +16,8 @@ app = webapp2.WSGIApplication([
     (r'/login', LoginHandler),
     (r'/logout', LogoutHandler),
     (r'/(.*)', WikiPage),  # need to change to take strings
+    # TODO change WikiPage to test if exists, go to edit page
+    # if not , else to retrieve page
     (r'/newpost', FormPage),
     # (r'/', MainPage),
     # (r'/.json', MainPageJson),
