@@ -5,7 +5,7 @@ import logging
 import datetime
 
 
-class PermalinkPage(Handler):
+class WikiPage(Handler):
     def get(self, blogpost_id_p):
         blog_query = memcache.get(blogpost_id_p)
         if blog_query is not None:

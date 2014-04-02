@@ -6,18 +6,21 @@ import datetime
 
 
 class WikiPage(Handler):
-    def get(self, blogpost_id_p):
-        blog_query = memcache.get(blogpost_id_p)
+    def get(self, wikipage_address):
+        blog_query = memcache.get(wikipage_address)
         if blog_query is not None:
             logging.error('cache-hit')
             self.time_elapsed_fn(blog_query)
         else:
             logging.error('cache-miss')
             timestamp = datetime.datetime.now()
-            blog_query = (BlogData.get_by_id(int(blogpost_id_p)),
+            blog_query = (BlogData.get_by_id(int(wikipage_address)),
                           timestamp)
-            memcache.set(blogpost_id_p, blog_query)
+            memcache.set(wikipage_address, blog_query)
             self.time_elapsed_fn(blog_query)
+
+# TODO may need to incorporate the caching code back into
+# get function rather than in time_elapsed_fn
 
     def time_elapsed_fn(self, blog_query_p):
         last_updated = blog_query_p[1]
