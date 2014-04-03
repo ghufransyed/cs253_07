@@ -14,17 +14,12 @@ class EditPage(WikiPage):
                              (cookie_p))
             if user_id_check:
                 params["username"] = user_id_check
-                if get_data(wikipage_address):
-                    params["parent_page"] = params["wikipage_query"]
+                get_data(wikipage_address)
                 self.render("editpage.html", **params)
         else:
             self.redirect("/signup")
 
     def post(self, wikipage_address):
-        # PAGE_RE = r'(/(?:[a-zA-Z0-9_-]+/?)*)'
-        # wikipage_address = re.search('/_edit' +
-        #                            PAGE_RE,
-        #                             wikipage_address).group(0)
         logging.error(wikipage_address)
         user_id_check = (security.check_secure_val
                          (self.request.cookies.get('user_id')))
@@ -33,9 +28,8 @@ class EditPage(WikiPage):
         else:
             self.redirect("/login")
         page_content = self.request.get("content")
-        # params["content"] = page_content
-        if "parent_page" in params:
-            parent_p = params["parent_page"].key
+        if get_data(wikipage_address):
+            parent_p = params["wikipage_query"].key
         else:
             parent_p = None
         page_data = WikiData(
