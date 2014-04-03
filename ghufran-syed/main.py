@@ -3,6 +3,8 @@ from signup import SignupHandler
 from login import LoginHandler
 from logout import LogoutHandler
 from wikipage import WikiPage
+from editpage import EditPage
+from historypage import HistoryPage
 
 
 PAGE_RE = r'(/(?:[a-zA-Z0-9_-]+/?)*)'

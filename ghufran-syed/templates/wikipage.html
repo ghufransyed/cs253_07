@@ -1,27 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Blog{% endblock %}
+{% block title %}Wiki{% endblock %}
 {% block head %}
     {{super()}}
 {% endblock %}
 {% block content %}
-    <h1>Blog</h1>
+    <h1>Wiki</h1>
     <hr>
     <div>
-        <h1> {{wikipage_query.subject}} </h1>
             <span>
                 <input type="BUTTON" onclick="parent.location='/'"
                 value="Home Page" class="float-right">
             </span>
-            <span class="float-right">{{wikipage_query.created.date()}} </span>
     </div>
     <div>
         {{wikipage_query.content}}
-    </div>
-    <div>
-        Last update: {{last_updated}}
-    </div>
-    <div>
-        Queried {{time_elapsed}} seconds ago
     </div>
     <hr>
 

@@ -4,16 +4,16 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 {% endblock %}
 {% block content %}
-    <h1>new post</h1>
+    <h1>Edit Page</h1>
     <form method="POST">
         <div class="label">
-            blog
+            Page Contents
             <span class="error">
                 {{content_err}}
             </span>
         </div>
         <div class = "content">
-            <textarea name = "content" >{{content}}</textarea>
+            <textarea name = "content" >{{wikipage_query.content}}</textarea>
         </div>
         <div>
             <input type="SUBMIT">

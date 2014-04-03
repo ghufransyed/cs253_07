@@ -83,7 +83,7 @@ class SignupHandler(Handler):
 
             user_obj.put()
 
-            self.redirect("/welcome")
+            self.redirect("/")
         else:
             form_params["username"] = username
             form_params["email"] = email
@@ -93,20 +93,3 @@ class SignupHandler(Handler):
             form_params["email_err"] = email_err
 
             self.render("signup.html", **form_params)
-
-# class User(db.Model):
-#     user_id = db.StringProperty()
-#     password = db.StringProperty()
-#     email = db.EmailProperty()
-
-
-# class Handler(webapp2.RequestHandler):
-#     def write(self, *a, **kw):
-#         self.response.write(*a, **kw)
-#
-#     def render_str(self, template, **params):
-#         t = jinja_env.get_template(template)
-#         return t.render(**params)
-#
-#     def render(self, template, **kw):
-#         self.write(self.render_str(template, **kw))

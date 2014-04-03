@@ -37,8 +37,8 @@ class LoginHandler(Handler):
         username_test = self.request.get('username')
         password_test = self.request.get('password')
 
-        user_query = User.all()
-        user_query_f = user_query.filter('user_id =',
+        user_query = User.query()
+        user_query_f = user_query.filter(User.user_id ==
                                          security.make_secure_val
                                          (username_test))
         user_query_r = user_query_f.fetch(1)
@@ -72,7 +72,7 @@ class LoginHandler(Handler):
                                      # secure=True,
                                      # httponly=False
                                      )
-            self.redirect("/welcome")
+            self.redirect("/")
 
 
 class WelcomeHandler(Handler):

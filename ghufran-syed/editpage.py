@@ -1,55 +1,54 @@
 from wikipage import WikiPage
-from mainhandler import params
-import re
-from models import WikiData # TODO change refs below from BlogData
+from models import WikiData
 from google.appengine.api import memcache
+import security
+import logging
+from get_data import get_data, params
 
 
-CONTENT_RE = re.compile(".{5,}")
-
-
-class FormPage(MainPage):
-    def get(self):
-        self.render("editpage.html", **params)
-
-    def post(self):
-        subject = self.request.get("subject")
-        content = self.request.get("content")
-        self.error_handling(subject, content)
-
-    def error_handling(self, p_subject, p_content):
-        params["subject"] = p_subject
-        params["content"] = p_content
-
-        subject_match = re.match(SUBJECT_RE, p_subject)
-        content_match = re.match(CONTENT_RE, p_content)
-        if subject_match and content_match:
-            blogpost = BlogData(subject=p_subject, content=p_content)
-            blogpost.put()
-            blogpost_id = blogpost.key().id()
-            # add code to refill cache
-            memcache.flush_all()
-
-            # next few lines reset params
-            params["title_err"] = ""
-            params["content_err"] = ""
-            params["subject"] = ""
-            params["content"] = ""
-
-            self.redirect(str(blogpost_id))
-            return
-        # need to include return statement here after putting in code
-        # for 'success' page
-
-        # next code is to handle errors
-        if not subject_match:
-            params["title_err"] = """Sorry, that is not a valid
-            subject entry (minumum 5 characters)"""
+class EditPage(WikiPage):
+    def get(self, wikipage_address):
+        cookie_p = self.request.cookies.get('user_id')
+        if cookie_p:
+            user_id_check = (security.check_secure_val
+                             (cookie_p))
+            if user_id_check:
+                params["username"] = user_id_check
+                if get_data(wikipage_address):
+                    params["parent_page"] = params["wikipage_query"]
+                self.render("editpage.html", **params)
         else:
-            params["title_err"] = ""
-        if not content_match:
-            params["content_err"] = """Sorry, that is not a valid
-             blog entry (minumum 5 characters)"""
+            self.redirect("/signup")
+
+    def post(self, wikipage_address):
+        # PAGE_RE = r'(/(?:[a-zA-Z0-9_-]+/?)*)'
+        # wikipage_address = re.search('/_edit' +
+        #                            PAGE_RE,
+        #                             wikipage_address).group(0)
+        logging.error(wikipage_address)
+        user_id_check = (security.check_secure_val
+                         (self.request.cookies.get('user_id')))
+        if user_id_check:
+            params["username"] = user_id_check
         else:
-            params["content_err"] = ""
-        self.render("editpage.html", **params)
+            self.redirect("/login")
+        page_content = self.request.get("content")
+        # params["content"] = page_content
+        if "parent_page" in params:
+            parent_p = params["parent_page"].key
+        else:
+            parent_p = None
+        page_data = WikiData(
+            id=wikipage_address,
+            parent=parent_p,
+            content=page_content,
+            author=user_id_check)
+        page_data.put()
+        memcache.set(page_data.key.id(), page_data)
+
+        # next few lines reset params
+        params["content_err"] = ""
+        params["content"] = ""
+
+        self.redirect(wikipage_address)
+        return
